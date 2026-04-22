@@ -96,7 +96,6 @@ function ProductDetail() {
       </div>
 
       <CRow className="mb-4">
-        {/* Info del producto */}
         <CCol md={6}>
           <CCard className="h-100 shadow-sm">
             <CCardHeader className="fw-semibold">Información general</CCardHeader>
@@ -122,8 +121,6 @@ function ProductDetail() {
             </CCardBody>
           </CCard>
         </CCol>
-
-        {/* Stock total */}
         <CCol md={6}>
           <CCard className="h-100 shadow-sm">
             <CCardHeader className="fw-semibold d-flex align-items-center justify-content-between">
@@ -137,7 +134,6 @@ function ProductDetail() {
                 <p className="text-secondary mb-0">Sin stock registrado.</p>
               ) : (
                 <>
-                  {/* Resumen por almacén */}
                   <div className="mb-3">
                     <p className="text-secondary small mb-2">Resumen por almacén</p>
                     <div className="d-flex flex-wrap gap-2">
@@ -156,7 +152,6 @@ function ProductDetail() {
                     </div>
                   </div>
 
-                  {/* Tabla de lotes */}
                   <p className="text-secondary small mb-2">Detalle de lotes</p>
                   <CTable hover responsive bordered small className="mb-0">
                     <CTableHead color="light">
@@ -196,7 +191,6 @@ function ProductDetail() {
         </CCol>
       </CRow>
 
-      {/* Detalles técnicos */}
       <CCard className="shadow-sm mb-4">
         <CCardHeader className="fw-semibold d-flex align-items-center justify-content-between">
           <span>Detalles técnicos</span>
@@ -222,8 +216,6 @@ function ProductDetail() {
           )}
         </CCardBody>
       </CCard>
-
-      {/* Movimientos */}
       <CCard className="shadow-sm">
         <CCardHeader className="fw-semibold">Historial de movimientos</CCardHeader>
         <CCardBody>

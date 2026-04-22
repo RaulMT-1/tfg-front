@@ -23,7 +23,7 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const [showLogin, setShowLogin] = useState(false) // Estado para el efecto estor
+  const [showLogin, setShowLogin] = useState(false)
   
   const navigate = useNavigate()
 
@@ -80,8 +80,6 @@ const Login = () => {
           <p className="text-uppercase small mt-2 justify-content-center" style={{ letterSpacing: '3px'}}>Entrar</p>
         </div>
       </div>
-
-      {/* --- FORMULARIO DE LOGIN --- */}
       <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
         <CContainer>
           <CRow className="justify-content-center">
@@ -118,7 +116,7 @@ const Login = () => {
 
                       <CRow className="align-items-center">
                         <CCol xs={6}>
-                          <CButton type="submit" color="primary" className="px-4" disabled={loading}>
+                          <CButton type="submit" color="dark" className="px-4" disabled={loading}>
                             {loading ? <><CSpinner size="sm" className="me-2" />Entrando...</> : 'Login'}
                           </CButton>
                         </CCol>
@@ -151,8 +149,6 @@ const Login = () => {
           </CRow>
         </CContainer>
       </div>
-
-      {/* Estilos adicionales para la animación de la flecha */}
       <style>{`
         @keyframes bounce {
           0%, 20%, 50%, 80%, 100% {transform: translateY(0);}

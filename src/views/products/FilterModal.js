@@ -108,7 +108,7 @@ function FilterModal({ visible, onClose, onApply, initialFilters = {} }) {
             <option value="">Todas</option>
             {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
-                {cat.name}  {/* <-- aquí mostramos el nombre */}
+                {cat.name} 
                 </option>
             ))}
             </CFormSelect>

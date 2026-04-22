@@ -14,7 +14,6 @@ const SummaryCard = ({ title, value, icon }) => (
   <CCol xs={12} sm={6} lg={4} className="mb-3 d-flex justify-content-center">
     <CCard className="shadow-sm border-0 w-100" style={{ borderRadius: '12px', maxWidth: '300px' }}>
       <CCardBody className="d-flex align-items-center p-2"> 
-        {/* Icono más compacto */}
         <div
           style={{
             width: '36px',
@@ -30,8 +29,6 @@ const SummaryCard = ({ title, value, icon }) => (
         >
           <CIcon icon={icon} style={{ width: '18px', height: '18px', color: '#475569' }} />
         </div>
-
-        {/* Contenedor de texto adaptable */}
         <div style={{ minWidth: 0, flex: 1 }}>
           <div 
             className="text-muted text-uppercase fw-semibold text-truncate" 
@@ -42,7 +39,7 @@ const SummaryCard = ({ title, value, icon }) => (
           <div 
             className="fw-bold text-dark text-truncate" 
             style={{ fontSize: '13px', lineHeight: '1.2' }}
-            title={value} // Muestra el texto completo al poner el mouse encima
+            title={value}
           >
             {value || '—'}
           </div>

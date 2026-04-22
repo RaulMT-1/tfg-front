@@ -5,18 +5,6 @@ import { cilBasket, cilDollar, cilArrowTop, cilArrowBottom } from '@coreui/icons
 import { CChartDoughnut, CChartPie, CChartBar, CChartLine } from '@coreui/react-chartjs'
 import { apiFetch } from '../../services/api'
 
-/*
-const COLORS = {
-  blue: '#3B82F6',
-  green: '#10B981',
-  orange: '#F59E0B',
-  red: '#EF4444',
-  purple: '#8B5CF6',
-  cyan: '#06B6D4',
-  pie: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4', '#F97316'],
-  expiringBars: ['#EF4444', '#F59E0B', '#10B981', '#3B82F6'],
-}
-*/
 
 const COLORS = {
   blue: '#346191', 
@@ -26,12 +14,12 @@ const COLORS = {
   purple: '#847CB5', 
   cyan: '#6BA5C2', 
   pie: [
-    '#214066', // Azul Marino
-    '#39634F', // Verde Bosque
-    '#A07335', // Ocre Dorado
-    '#823F46', // Burdeos
-    '#5C507E', // Lavanda Gris
-    '#4E6E81'  // Petróleo
+    '#214066', 
+    '#39634F', 
+    '#A07335', 
+    '#823F46', 
+    '#5C507E', 
+    '#4E6E81'  
   ],
   expiringBars: ['#823F46', '#A07335', '#39634F', '#214066'],
 }
@@ -204,7 +192,6 @@ const Dashboard = () => {
       </CRow>
 
       <CRow>
-        {/* Gráfico de Líneas Suaves */}
         <CCol xs={12} md={8} className="mb-4">
           <CCard className="shadow-sm border-0 rounded-3 h-100">
             <CCardHeader className="bg-white border-0 fw-bold py-3 text-dark fs-5">Rendimiento Mensual</CCardHeader>
@@ -264,8 +251,6 @@ const Dashboard = () => {
             </CCardBody>
           </CCard>
         </CCol>
-
-        {/* Categorías */}
         <CCol xs={12} md={4} className="mb-4">
           <CCard className="shadow-sm border-0 rounded-3 h-100">
             <CCardHeader className="bg-white border-0 fw-bold py-3 text-dark fs-5">Categorías</CCardHeader>
@@ -290,8 +275,6 @@ const Dashboard = () => {
             </CCardBody>
           </CCard>
         </CCol>
-
-        {/* Valor de Stock por Almacén */}
         <CCol xs={12} md={6} className="mb-4">
           <CCard className="shadow-sm border-0 rounded-3 h-100">
             <CCardHeader className="bg-white border-0 fw-bold py-3 text-dark fs-5">Valor de Stock por Almacén</CCardHeader>
@@ -319,8 +302,6 @@ const Dashboard = () => {
             </CCardBody>
           </CCard>
         </CCol>
-
-        {/* Estado Crítico de Lotes */}
         <CCol xs={12} md={6} className="mb-4">
           <CCard className="shadow-sm border-0 rounded-3 h-100">
             <CCardHeader className="bg-white border-0 fw-bold py-3 text-dark fs-5">

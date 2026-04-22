@@ -191,7 +191,7 @@ const Register = () => {
                   </CInputGroup>
 
                   <div className="d-grid">
-                    <CButton color="success" type="submit" disabled={loading}>
+                    <CButton color="dark" type="submit" disabled={loading}>
                       {loading ? "Registrando..." : "Crear cuenta"}
                     </CButton>
                   </div>
