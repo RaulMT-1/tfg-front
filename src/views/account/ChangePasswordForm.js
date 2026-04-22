@@ -53,10 +53,10 @@ function ChangePasswordForm() {
         <CFormInput type="password" name="newPassword" value={form.newPassword} onChange={handleChange} required disabled={loading} />
 
         <div style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem' }}>
-          <CButton type="submit" color="success" disabled={loading}>
+          <CButton type="submit" color="dark" variant="outline" disabled={loading}>
             {loading ? 'Actualizando...' : 'Actualizar Contraseña'}
           </CButton>
-          <CButton color="secondary" onClick={() => navigate('/account')} disabled={loading}>
+          <CButton color="danger" variant="outline" onClick={() => navigate('/account')} disabled={loading}>
             Cancelar
           </CButton>
         </div>

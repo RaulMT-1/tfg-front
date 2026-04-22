@@ -226,7 +226,7 @@ function InventoryMovementCreate() {
         <CButton type="button" color="info" onClick={addDetail}>+ Agregar Producto</CButton>
 
         <div style={{ display: 'flex', gap: '10px', marginTop: '2rem' }}>
-          <CButton type="submit" color="primary" disabled={loading}>
+          <CButton type="submit" color="success" disabled={loading}>
             {loading ? 'Guardando...' : 'Guardar Movimiento'}
           </CButton>
           <CButton color="secondary" onClick={() => navigate('/movements')}>Cancelar</CButton>

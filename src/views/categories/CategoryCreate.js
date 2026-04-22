@@ -54,10 +54,10 @@ function CategoryCreate() {
         <CFormTextarea name="description" value={form.description} onChange={handleChange} rows="3" disabled={loading} />
 
         <div style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem' }}>
-          <CButton type="submit" color="success" disabled={loading}>
+          <CButton type="submit"  variant="outline" color="dark" disabled={loading}>
             {loading ? 'Creando...' : 'Crear Categoría'}
           </CButton>
-          <CButton color="secondary" onClick={() => navigate('/categories')} disabled={loading}>
+          <CButton color="danger"  variant="outline" onClick={() => navigate('/categories')} disabled={loading}>
             Cancelar
           </CButton>
         </div>

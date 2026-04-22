@@ -127,12 +127,12 @@ function ProductsCreate() {
         </div>
 
         <div style={{ display: 'flex', gap: '10px' }}>
-          <CButton type="submit" color="primary" disabled={loading}>
+          <CButton type="submit" color="dark"  variant="outline" disabled={loading}>
             {loading
               ? isEditMode ? 'Guardando...' : 'Creando...'
               : isEditMode ? 'Guardar Cambios' : 'Crear Producto'}
           </CButton>
-          <CButton color="secondary" onClick={() => navigate('/products')} disabled={loading}>
+          <CButton color="danger"  variant="outline" onClick={() => navigate('/products')} disabled={loading}>
             Cancelar
           </CButton>
         </div>

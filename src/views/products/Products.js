@@ -1,13 +1,15 @@
 import { useState, useCallback } from 'react'
 import {
   CTable, CTableHead, CTableBody, CTableRow, CTableHeaderCell, CTableDataCell,
-  CFormInput, CButton, CFormSelect, CAlert,
+  CFormInput, CButton, CFormSelect, CAlert, CTooltip
 } from '@coreui/react'
+import CIcon from '@coreui/icons-react';
 import { useNavigate } from 'react-router-dom'
 import { apiFetch } from '../../services/api'
 import { usePagination } from '../../hooks/usePagination'
 import Pagination from '../../components/myComponents/Pagination'
 import { useEffect } from 'react'
+import { cilPlus } from '@coreui/icons'
 
 const ITEMS_PER_PAGE = 10
 
@@ -103,11 +105,35 @@ function ProductsList() {
       </div>
 
       <div style={{ marginBottom: '1rem', display: 'flex', gap: '10px' }}>
-        <CButton color="success" size="sm" onClick={() => navigate('/products/create')}>
-          Crear Producto
-        </CButton>
+          <CTooltip content="Crear Productos" placement="top">
+            <CButton 
+              onClick={() => navigate('/products/create')}
+              className="p-0 border-0 shadow-none"
+              style={{ 
+                background: 'none', 
+                outline: 'none',
+                boxShadow: 'none' 
+              }}
+            >
+              <div className=" text-dark d-flex align-items-center justify-content-center fw-bold"
+                style={{
+                  width: '45px',
+                  height: '45px',
+                  borderRadius: '100px',
+                  fontSize: '1.2rem',
+                  boxShadow: '0 10px 10pX rgba(0,0,0,0.1)',
+                  transition: 'transform 0.2s',
+                  backgroundColor: '#4f5b6d5f'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              >
+                <CIcon icon={cilPlus} size="xl"/>
+              </div>
+            </CButton>
+          </CTooltip>
         {selectedProducts.length > 0 && (
-          <CButton color="danger" size="sm" onClick={handleDeleteSelected}>
+          <CButton color="danger" variant="outline" onClick={handleDeleteSelected}>
             Eliminar seleccionados ({selectedProducts.length})
           </CButton>
         )}
@@ -138,7 +164,7 @@ function ProductsList() {
                 <CTableDataCell>{p.barcode}</CTableDataCell>
                 <CTableDataCell>{p.categoryName}</CTableDataCell>
                 <CTableDataCell>
-                  <CButton color="primary" size="sm" disabled={selectedProducts.length >= 1} onClick={() => navigate('/products/' + p.id)}>
+                  <CButton color='dark' size="sm" disabled={selectedProducts.length >= 1} onClick={() => navigate('/products/' + p.id)}>
                     Detalles
                   </CButton>
                 </CTableDataCell>

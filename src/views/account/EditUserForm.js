@@ -76,10 +76,10 @@ function EditUserForm() {
         <CFormInput type="email" name="email" value={user.email} onChange={handleChange} required disabled={saving} />
 
         <div style={{ marginTop: '1rem', display: 'flex', gap: '0.5rem' }}>
-          <CButton type="submit" color="success" disabled={saving}>
+          <CButton type="submit" variant="outline" color="dark" disabled={saving}>
             {saving ? 'Guardando...' : 'Guardar Cambios'}
           </CButton>
-          <CButton color="secondary" onClick={() => navigate('/account')} disabled={saving}>
+          <CButton color="danger" variant="outline" onClick={() => navigate('/account')} disabled={saving}>
             Cancelar
           </CButton>
         </div>

@@ -27,6 +27,7 @@ import {
 
 import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
+import milogo from  'src/assets/brand/milogo.png'
 
 const AppHeader = () => {
   const headerRef = useRef()
@@ -55,7 +56,11 @@ const AppHeader = () => {
         <CHeaderNav className="d-none d-md-flex">
           <CNavItem>
             <CNavLink to="/dashboard" as={NavLink}>
-              Dashboard
+              <img
+                        src={milogo}
+                        alt="Mi Logo"
+                        style={{ height: '40px', width: '130px', backgroundColor: 'rgba(30, 41, 59, 0.9)',  borderRadius: '15px' }}
+                      />
             </CNavLink>
           </CNavItem>
         </CHeaderNav>

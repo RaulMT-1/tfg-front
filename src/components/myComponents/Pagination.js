@@ -10,6 +10,19 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1rem' }}>
+      <style>
+        {`
+          .pagination {
+            --cui-pagination-active-bg: #1E293B;
+            --cui-pagination-active-border-color: #1E293B;
+            --cui-pagination-color: #475569;
+            --cui-pagination-hover-color: #1E293B;
+            --cui-pagination-border-radius: 8px;
+          }
+          .page-item { margin: 0 2px; }
+          .page-link { border-radius: 6px !important; border: none; shadow: none; }
+        `}
+      </style>
       <CPagination>
         <CPaginationItem
           disabled={currentPage === 1}

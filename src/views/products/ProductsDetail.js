@@ -201,7 +201,7 @@ function ProductDetail() {
         <CCardHeader className="fw-semibold d-flex align-items-center justify-content-between">
           <span>Detalles técnicos</span>
           {details ? (
-            <CButton color="primary" size="sm" onClick={() => navigate('/products/' + id + '/details/edit')}>
+            <CButton color="warning" size="sm" onClick={() => navigate('/products/' + id + '/details/edit')}>
               Editar
             </CButton>
           ) : (

@@ -243,10 +243,10 @@ function ReportCreate() {
             )}
 
             <div className="d-flex gap-2 mt-2">
-              <CButton type="submit" color="primary" disabled={loading}>
+              <CButton type="submit" color="dark" variant="outline" disabled={loading}>
                 {loading ? <><CSpinner size="sm" className="me-2" />Generando...</> : 'Generar PDF'}
               </CButton>
-              <CButton color="secondary" onClick={() => navigate(-1)}>
+              <CButton color="danger" variant="outline" onClick={() => navigate(-1)}>
                 Cancelar
               </CButton>
             </div>

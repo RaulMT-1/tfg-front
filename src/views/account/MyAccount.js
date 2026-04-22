@@ -20,13 +20,14 @@ function UserDetail() {
 
   return (
     <div style={{ padding: '2rem' }}>
-      <h2>Detalle del Usuario</h2>
+      <h2>¡Hola, {user.firstName}!</h2>
+      <p>Recuerda que en LoQueHay, si lo necesitas, siempre podrás editar tus datos de usuario: </p>
       <div style={{ marginBottom: '1.5rem', background: '#f8f9fa', padding: '1rem', borderRadius: '8px', position: 'relative' }}>
         <div style={{ position: 'absolute', top: '1rem', right: '1rem', display: 'flex', gap: '0.5rem' }}>
-          <CButton color="warning" size="sm" onClick={() => navigate('/account/edit')}>
+          <CButton color="dark" variant="outline" size="sm" onClick={() => navigate('/account/edit')}>
             Editar Usuario
           </CButton>
-          <CButton color="info" size="sm" onClick={() => navigate('/account/password')}>
+          <CButton color="warning" variant="outline" size="sm" onClick={() => navigate('/account/password')}>
             Cambiar Contraseña
           </CButton>
         </div>

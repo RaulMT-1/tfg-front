@@ -3,9 +3,54 @@ import { useParams, useNavigate } from 'react-router-dom'
 import {
   CButton, CCard, CCardBody, CCardHeader,
   CTable, CTableHead, CTableBody, CTableRow, CTableHeaderCell, CTableDataCell,
-  CSpinner, CAlert,
+  CSpinner, CAlert, CRow, CCol, CCardText, CCardTitle
 } from '@coreui/react'
 import { apiFetch } from '../../services/api'
+import { cilBasket, cilDollar, cilArrowTop, cilArrowThickToLeft, cilArrowBottom, cilLibraryBuilding, cilUser, cilNotes, cilFolderOpen, cilHome,
+  cilGroup, cilCalendar} from '@coreui/icons'
+import CIcon from '@coreui/icons-react'
+
+const SummaryCard = ({ title, value, icon }) => (
+  <CCol xs={12} sm={6} lg={4} className="mb-3 d-flex justify-content-center">
+    <CCard className="shadow-sm border-0 w-100" style={{ borderRadius: '12px', maxWidth: '300px' }}>
+      <CCardBody className="d-flex align-items-center p-2"> 
+        {/* Icono más compacto */}
+        <div
+          style={{
+            width: '36px',
+            height: '36px',
+            borderRadius: '8px',
+            backgroundColor: '#f1f5f9',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginRight: '12px',
+            flexShrink: 0,
+          }}
+        >
+          <CIcon icon={icon} style={{ width: '18px', height: '18px', color: '#475569' }} />
+        </div>
+
+        {/* Contenedor de texto adaptable */}
+        <div style={{ minWidth: 0, flex: 1 }}>
+          <div 
+            className="text-muted text-uppercase fw-semibold text-truncate" 
+            style={{ fontSize: '9px', letterSpacing: '0.5px' }}
+          >
+            {title}
+          </div>
+          <div 
+            className="fw-bold text-dark text-truncate" 
+            style={{ fontSize: '13px', lineHeight: '1.2' }}
+            title={value} // Muestra el texto completo al poner el mouse encima
+          >
+            {value || '—'}
+          </div>
+        </div>
+      </CCardBody>
+    </CCard>
+  </CCol>
+)
 
 function InventoryMovementDetail() {
   const { id } = useParams()
@@ -23,8 +68,8 @@ function InventoryMovementDetail() {
   }, [id])
 
   if (loading) return (
-    <div className="text-center mt-5">
-      <CSpinner color="primary" />
+    <div className="d-flex flex-column align-items-center justify-content-center">
+      <CSpinner color="primary" variant='grow'/>
       <p className="mt-2">Cargando movimiento...</p>
     </div>
   )
@@ -47,30 +92,53 @@ function InventoryMovementDetail() {
 
   return (
     <div style={{ maxWidth: '1000px', margin: '2rem auto' }}>
-      <CButton color="secondary" size="sm" onClick={() => navigate(-1)}>← Volver</CButton>
+      
 
       <CCard className="mt-3 shadow-sm border-0">
-        <CCardHeader className="bg-primary text-white">
-          <h5 className="mb-0">
-            Movimiento #{movement.id} — {isEntry ? 'Entrada de Inventario' : 'Salida de Inventario'}
-          </h5>
-        </CCardHeader>
-        <CCardBody style={{ backgroundColor: '#fafafa' }}>
-          <div className="mb-3">
-            <p><strong>Documento de Referencia:</strong> {movement.referenceDocument || '-'}</p>
-            <p><strong>Nota:</strong> {movement.note || '-'}</p>
-            <p><strong>Almacén:</strong> {movement.warehouseName}</p>
-            <p><strong>Propietario:</strong> {movement.ownerName}</p>
-            <p><strong>Creado por:</strong> {movement.createdByName}</p>
-            <p><strong>Fecha de Creación:</strong> {new Date(movement.createdAt).toLocaleString()}</p>
+      
+        <CCardHeader className="bg-white">
+          <div className="d-flex justify-content-between align-items-center">
+            <div className="bg-light text-dark d-flex align-items-center justify-content-center fw-bold me-3" 
+              style={{ 
+                width: '45px', 
+                height: '45px', 
+                borderRadius: '10px',
+                fontSize: '1.2rem',
+                boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+              }}
+            >
+            {movement.id}
           </div>
+              <h3 className="fw-bold text-dark mb-1">
+                {isEntry ? 'Entrada de Inventario' : 'Salida de Inventario'}
+              </h3>
 
-          <h5 className="mt-4 mb-3 text-primary fw-bold">Detalles del Movimiento</h5>
+              < div className="d-flex gap-2"> 
+              <CButton color="dark" onClick={() => navigate(-1)}>
+              <CIcon icon={cilArrowThickToLeft} className="me-2" /></CButton>
+              </div>
+          </div>
+        </CCardHeader>
+        
+        <CCardBody style={{ backgroundColor: '#fafafa' }}>
+          
+          <CRow className="mb-2 justify-content-center">
+            <SummaryCard title="Documento de Referencia:" value={movement.referenceDocument} icon={cilFolderOpen} />
+            <SummaryCard title="Nota:" value={movement.note} icon={cilNotes} />
+            <SummaryCard title="Almacén:" value={movement.warehouseName} icon={cilLibraryBuilding} />
+          </CRow>
+          <CRow className="mb-2 justify-content-center">
+            <SummaryCard title="Propietario" value={movement.ownerName} icon={cilGroup} />
+            <SummaryCard title="Creado por:" value={movement.createdByName}  icon={cilUser} />
+            <SummaryCard title="Fecha de Creación:" value={movement.createdAt} icon={cilCalendar} />
+          </CRow>
+
+          <h5 className="mt-4 mb-2 text-dark fw-bold">Detalles del Movimiento</h5>
 
           <CCard className="border-light shadow-sm">
             <CCardBody>
               <CTable hover responsive align="middle" bordered>
-                <CTableHead color="light">
+                <CTableHead color="dark">
                   <CTableRow>
                     <CTableHeaderCell>Producto</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Cantidad</CTableHeaderCell>

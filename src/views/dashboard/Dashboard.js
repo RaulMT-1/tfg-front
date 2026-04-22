@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 import { CCard, CCardBody, CCardHeader, CRow, CCol, CSpinner } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilBasket, cilDollar, cilArrowTop, cilArrowBottom } from '@coreui/icons'
-import { CChartPie, CChartBar } from '@coreui/react-chartjs'
+import { CChartDoughnut, CChartPie, CChartBar, CChartLine } from '@coreui/react-chartjs'
 import { apiFetch } from '../../services/api'
 
+/*
 const COLORS = {
   blue: '#3B82F6',
   green: '#10B981',
@@ -15,6 +16,26 @@ const COLORS = {
   pie: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#06B6D4', '#F97316'],
   expiringBars: ['#EF4444', '#F59E0B', '#10B981', '#3B82F6'],
 }
+*/
+
+const COLORS = {
+  blue: '#346191', 
+  green: '#6eb091', 
+  orange: '#D49664', 
+  red: '#C25E65', 
+  purple: '#847CB5', 
+  cyan: '#6BA5C2', 
+  pie: [
+    '#214066', // Azul Marino
+    '#39634F', // Verde Bosque
+    '#A07335', // Ocre Dorado
+    '#823F46', // Burdeos
+    '#5C507E', // Lavanda Gris
+    '#4E6E81'  // Petróleo
+  ],
+  expiringBars: ['#823F46', '#A07335', '#39634F', '#214066'],
+}
+
 
 const fmt = (n) =>
   typeof n === 'number'
@@ -40,30 +61,27 @@ const EmptyChart = ({ message = 'Sin datos disponibles' }) => (
 
 const SummaryCard = ({ title, value, icon, color, subtitle }) => (
   <CCol xs={12} sm={6} lg={3} className="mb-4">
-    <CCard className="shadow-sm border-0 rounded-3 h-100">
-      <CCardBody className="d-flex align-items-center gap-3 p-4">
+    <CCard className="shadow-sm border-0 h-100" style={{ borderRadius: '12px' }}>
+      <CCardBody className="d-flex align-items-center gap-3 p-3">
         <div
           style={{
-            width: 52,
-            height: 52,
-            borderRadius: 14,
-            backgroundColor: `rgba(var(--cui-${color}-rgb, 59,130,246), 0.12)`,
+            width: 48,
+            height: 48,
+            borderRadius: 10,
+            backgroundColor: '#f1f5f9', 
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            marginRight: 15,
             flexShrink: 0,
           }}
         >
-          <CIcon icon={icon} className={`text-${color}`} style={{ width: 26, height: 26 }} />
+          <CIcon icon={icon} style={{ width: 24, height: 24, color: '#475569' }} />
         </div>
-        <div style={{ minWidth: 0 }}>
-          <div className="text-secondary small text-truncate">{title}</div>
-          <div className="fs-4 fw-bold text-truncate">{value}</div>
-          {subtitle && (
-            <div className="text-secondary" style={{ fontSize: '0.75rem' }}>
-              {subtitle}
-            </div>
-          )}
+        <div className="text-truncate">
+          <div className="text-muted text-uppercase fw-semibold" style={{ fontSize: '10px', letterSpacing: '0.5px' }}>{title}</div>
+          <div className="fw-bold fs-4 text-dark">{value}</div>
+          <div className="text-muted" style={{ fontSize: '11px' }}>{subtitle}</div>
         </div>
       </CCardBody>
     </CCard>
@@ -111,7 +129,7 @@ const Dashboard = () => {
 
   if (loading)
     return (
-      <div className="d-flex align-items-center justify-content-center" style={{ minHeight: 300 }}>
+      <div className="d-flex align-items-center justify-content-center" style={{ minHeight: 400 }}>
         <CSpinner color="primary" />
         <span className="ms-3 text-secondary">Cargando dashboard...</span>
       </div>
@@ -124,35 +142,35 @@ const Dashboard = () => {
       </div>
     )
 
-  const { summary, categoryStock, stockByWarehouse, productsExpiring, monthlySalesPurchases } =
-    dashboardData
+  const { summary, categoryStock, stockByWarehouse, productsExpiring, monthlySalesPurchases } = dashboardData
+
 
   const cards = [
     {
       title: 'Productos en Stock',
       value: fmtInt(summary.totalProductsInStock),
-      subtitle: 'variedades distintas',
+      subtitle: 'Variedades distintas',
       icon: cilBasket,
       color: 'info',
     },
     {
       title: 'Valor Total Inventario',
       value: '$' + fmt(summary.totalInventoryValue),
-      subtitle: 'costo acumulado',
+      subtitle: 'Coste acumulado',
       icon: cilDollar,
       color: 'success',
     },
     {
       title: 'Ventas del Mes',
       value: fmtInt(summary.salesThisMonth),
-      subtitle: 'movimientos de salida',
+      subtitle: 'Movimientos de salida',
       icon: cilArrowTop,
       color: 'primary',
     },
     {
       title: 'Compras del Mes',
       value: fmtInt(summary.purchasesThisMonth),
-      subtitle: 'movimientos de entrada',
+      subtitle: 'Movimientos de entrada',
       icon: cilArrowBottom,
       color: 'warning',
     },
@@ -175,40 +193,46 @@ const Dashboard = () => {
   // Categorías — solo las que tienen productos
   const categoryFiltered = categoryStock.filter((c) => c.count > 0)
 
+
   return (
-    <>
+    <div style={{ backgroundColor: '#f4f7f9', minHeight: '100vh', padding: '20px' }}>
       <CRow className="mb-2">
-        {cards.map((card) => (
-          <SummaryCard key={card.title} {...card} />
-        ))}
+        <SummaryCard title="Productos en Stock" value={fmtInt(summary.totalProductsInStock)} subtitle="Variedades distintas" icon={cilBasket} />
+        <SummaryCard title="Valor Inventario" value={'$' + fmt(summary.totalInventoryValue)} subtitle="Coste acumulado" icon={cilDollar} />
+        <SummaryCard title="Ventas del Mes" value={fmtInt(summary.salesThisMonth)} subtitle="Salidas registradas" icon={cilArrowTop} />
+        <SummaryCard title="Compras del Mes" value={fmtInt(summary.purchasesThisMonth)} subtitle="Entradas registradas" icon={cilArrowBottom} />
       </CRow>
 
       <CRow>
-        {/* Ventas y Compras mensuales — barras agrupadas */}
+        {/* Gráfico de Líneas Suaves */}
         <CCol xs={12} md={8} className="mb-4">
-          <CCard className="shadow-sm rounded-3 h-100">
-            <CCardHeader className="fw-semibold py-3">Ventas y Compras — Últimos 6 meses</CCardHeader>
+          <CCard className="shadow-sm border-0 rounded-3 h-100">
+            <CCardHeader className="bg-white border-0 fw-bold py-3 text-dark fs-5">Rendimiento Mensual</CCardHeader>
             <CCardBody>
-              {!hasMonthlyData ? (
-                <EmptyChart message="No hay movimientos en los últimos 6 meses" />
-              ) : (
-                <CChartBar
+              {!hasMonthlyData ? <EmptyChart /> : (
+                <CChartLine
                   data={{
-                    labels: monthlySalesPurchases.months,
+                    labels: ['jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
                     datasets: [
                       {
                         label: 'Ventas',
-                        data: monthlySalesPurchases.sales,
-                        backgroundColor: COLORS.blue,
-                        borderRadius: 4,
-                        borderSkipped: false,
+                        data: [2000, 4000, 5000, 3000, 7000, 7000],
+                        backgroundColor: 'rgba(64, 91, 133, 0.4)', 
+                        borderColor: '#1E293B',
+                        fill: true,
+                        tension: 0.45,
+                        pointRadius: 0,
+                        borderWidth: 2,
                       },
                       {
                         label: 'Compras',
-                        data: monthlySalesPurchases.purchases,
-                        backgroundColor: COLORS.green,
-                        borderRadius: 4,
-                        borderSkipped: false,
+                        data: [4000, 8000, 11000, 6000, 4000, 9000],
+                        backgroundColor: 'rgba(57, 99, 79, 0.3)',
+                        borderColor: '#3e775b',
+                        fill: true,
+                        tension: 0.45,
+                        pointRadius: 0,
+                        borderWidth: 2,
                       },
                     ],
                   }}
@@ -234,50 +258,32 @@ const Dashboard = () => {
                       },
                       x: { grid: { display: false } },
                     },
-                  }}
+                  }}                  
                 />
               )}
             </CCardBody>
           </CCard>
         </CCol>
 
-        {/* Productos por categoría */}
+        {/* Categorías */}
         <CCol xs={12} md={4} className="mb-4">
-          <CCard className="shadow-sm rounded-3 h-100">
-            <CCardHeader className="fw-semibold py-3">Productos por Categoría</CCardHeader>
+          <CCard className="shadow-sm border-0 rounded-3 h-100">
+            <CCardHeader className="bg-white border-0 fw-bold py-3 text-dark fs-5">Categorías</CCardHeader>
             <CCardBody>
-              {categoryFiltered.length === 0 ? (
-                <EmptyChart message="No hay productos registrados" />
-              ) : (
-                <CChartPie
+              {categoryFiltered.length === 0 ? <EmptyChart /> : (
+                <CChartDoughnut
                   data={{
                     labels: categoryFiltered.map((c) => c.categoryName),
-                    datasets: [
-                      {
-                        data: categoryFiltered.map((c) => c.count),
-                        backgroundColor: COLORS.pie,
-                        borderWidth: 2,
-                        hoverOffset: 8,
-                      },
-                    ],
+                    datasets: [{
+                      data: categoryFiltered.map((c) => c.count),
+                      backgroundColor: COLORS.pie,
+                      borderWidth: 3,
+                      borderColor: '#ffffff',
+                    }],
                   }}
                   options={{
-                    responsive: true,
-                    plugins: {
-                      legend: {
-                        position: 'bottom',
-                        labels: { usePointStyle: true, padding: 12 },
-                      },
-                      tooltip: {
-                        callbacks: {
-                          label: (ctx) => {
-                            const total = ctx.dataset.data.reduce((a, b) => a + b, 0)
-                            const pct = total > 0 ? Math.round((ctx.parsed / total) * 100) : 0
-                            return ` ${ctx.label}: ${fmtInt(ctx.parsed)} (${pct}%)`
-                          },
-                        },
-                      },
-                    },
+                    cutout: '33%',
+                    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, padding: 15 } } }
                   }}
                 />
               )}
@@ -285,47 +291,28 @@ const Dashboard = () => {
           </CCard>
         </CCol>
 
-        {/* Valor de stock por almacén */}
+        {/* Valor de Stock por Almacén */}
         <CCol xs={12} md={6} className="mb-4">
-          <CCard className="shadow-sm rounded-3 h-100">
-            <CCardHeader className="fw-semibold py-3">Valor de Stock por Almacén</CCardHeader>
+          <CCard className="shadow-sm border-0 rounded-3 h-100">
+            <CCardHeader className="bg-white border-0 fw-bold py-3 text-dark fs-5">Valor de Stock por Almacén</CCardHeader>
             <CCardBody>
-              {warehouseLabels.length === 0 ? (
-                <EmptyChart message="No hay stock registrado en ningún almacén" />
-              ) : (
+              {warehouseLabels.length === 0 ? <EmptyChart /> : (
                 <CChartBar
                   data={{
                     labels: warehouseLabels,
-                    datasets: [
-                      {
-                        label: 'Valor ($)',
-                        data: warehouseValues,
-                        backgroundColor: warehouseLabels.map(
-                          (_, i) => COLORS.pie[i % COLORS.pie.length]
-                        ),
-                        borderRadius: 6,
-                        borderSkipped: false,
-                      },
-                    ],
+                    datasets: [{
+                      label: 'Valor ($)',
+                      data: warehouseValues,
+                      backgroundColor: warehouseLabels.map((_, i) => COLORS.pie[i % COLORS.pie.length]),
+                      borderRadius: 6,
+                    }],
                   }}
                   options={{
-                    responsive: true,
-                    plugins: {
-                      legend: { display: false },
-                      tooltip: {
-                        callbacks: {
-                          label: (ctx) => ` $${fmt(ctx.parsed.y)}`,
-                        },
-                      },
-                    },
+                    plugins: { legend: { display: false } },
                     scales: {
-                      y: {
-                        beginAtZero: true,
-                        ticks: { callback: (v) => '$' + fmtInt(v) },
-                        grid: { color: 'rgba(0,0,0,0.05)' },
-                      },
                       x: { grid: { display: false } },
-                    },
+                      y: { border: { display: false }, grid: { color: '#f0f0f0' }, ticks: { callback: (v) => '$' + fmtInt(v) } }
+                    }
                   }}
                 />
               )}
@@ -333,64 +320,41 @@ const Dashboard = () => {
           </CCard>
         </CCol>
 
-        {/* Lotes por vencer */}
+        {/* Estado Crítico de Lotes */}
         <CCol xs={12} md={6} className="mb-4">
-          <CCard className="shadow-sm rounded-3 h-100">
-            <CCardHeader className="fw-semibold py-3">Lotes por Vencer</CCardHeader>
-            <CCardBody>
+          <CCard className="shadow-sm border-0 rounded-3 h-100">
+            <CCardHeader className="bg-white border-0 fw-bold py-3 text-dark fs-5">
+              Estado Crítico de Lotes
+            </CCardHeader>
+            <CCardBody style={{ height: '350px', padding: '0px 15px 10px 15px' }} className="d-flex flex-column">
               {allZero ? (
                 <EmptyChart message="No hay lotes próximos a vencer" />
               ) : (
-                <>
-                  <CChartBar
-                    data={{
-                      labels: expiringLabels,
-                      datasets: [
-                        {
-                          label: 'Lotes',
-                          data: expiringCounts,
-                          backgroundColor: COLORS.expiringBars,
-                          borderRadius: 6,
-                          borderSkipped: false,
-                        },
-                      ],
-                    }}
-                    options={{
-                      responsive: true,
-                      plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                          callbacks: {
-                            label: (ctx) => ` ${fmtInt(ctx.parsed.y)} lote${ctx.parsed.y !== 1 ? 's' : ''}`,
-                          },
-                        },
-                      },
-                      scales: {
-                        y: {
-                          beginAtZero: true,
-                          ticks: { stepSize: 1, precision: 0 },
-                          grid: { color: 'rgba(0,0,0,0.05)' },
-                        },
-                        x: { grid: { display: false } },
-                      },
-                    }}
-                  />
-                  {/* Leyenda de colores */}
-                  <div className="d-flex flex-wrap gap-3 mt-3" style={{ fontSize: '0.8rem' }}>
-                    {expiringLabels.map((label, i) => (
-                      <div key={label} className="d-flex align-items-center gap-1">
-                        <div style={{ width: 12, height: 12, borderRadius: 3, backgroundColor: COLORS.expiringBars[i], flexShrink: 0 }} />
-                        <span className="text-secondary">{label}: <strong>{fmtInt(expiringCounts[i])}</strong></span>
-                      </div>
-                    ))}
-                  </div>
-                </>
+                <CChartBar
+                  data={{
+                    labels: expiringLabels,
+                    datasets: [{
+                      label: 'Lotes',
+                      data: expiringCounts,
+                      backgroundColor: COLORS.expiringBars,
+                      borderRadius: 6,
+                      barThickness: 50,
+                    }],
+                  }}
+                  options={{
+                    plugins: { legend: { display: false } },
+                    scales: {
+                      x: { grid: { display: false } },
+                      y: { border: { display: false }, grid: { color: '#f0f0f0' }, ticks: { callback: (v) => '$' + fmtInt(v) } }
+                    }
+                  }}
+                />
               )}
             </CCardBody>
           </CCard>
         </CCol>
       </CRow>
-    </>
+    </div>
   )
 }
 

@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useState } from 'react'
 import {
   CTable, CTableHead, CTableBody, CTableRow, CTableHeaderCell, CTableDataCell,
-  CFormInput, CFormSelect, CButton, CAlert,
+  CFormInput, CFormSelect, CButton, CAlert,CTooltip
 } from '@coreui/react'
+import CIcon from '@coreui/icons-react'
 import { useNavigate } from 'react-router-dom'
 import { apiFetch } from '../../services/api'
 import { usePagination } from '../../hooks/usePagination'
 import Pagination from '../../components/myComponents/Pagination'
-
+import { cilPlus } from '@coreui/icons'
 const ITEMS_PER_PAGE = 10
 
 function InventoryMovementList() {
@@ -100,18 +101,42 @@ function InventoryMovementList() {
       </div>
 
       <div style={{ marginBottom: '1rem', display: 'flex', gap: '10px' }}>
-        <CButton color="success" size="sm" onClick={() => navigate('/movement/create')}>
-          Crear Movimiento
-        </CButton>
+          <CTooltip content="Crear Movimiento" placement="top">
+            <CButton 
+              onClick={() => navigate('/movements/create')}
+              className="p-0 border-0 shadow-none"
+              style={{ 
+                background: 'none', 
+                outline: 'none',
+                boxShadow: 'none' 
+              }}
+            >
+              <div className=" text-dark d-flex align-items-center justify-content-center fw-bold"
+                style={{
+                  width: '45px',
+                  height: '45px',
+                  borderRadius: '100px',
+                  fontSize: '1.2rem',
+                  boxShadow: '0 10px 10pX rgba(0,0,0,0.1)',
+                  transition: 'transform 0.2s',
+                  backgroundColor: '#4f5b6d5f'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              >
+                <CIcon icon={cilPlus} size="xl"/>
+              </div>
+            </CButton>
+          </CTooltip>
         {selectedMovements.length > 0 && (
-          <CButton color="danger" size="sm" onClick={handleDeleteSelected}>
+          <CButton color="danger" variant='outline' size="sm" onClick={handleDeleteSelected}>
             Eliminar seleccionados ({selectedMovements.length})
           </CButton>
         )}
       </div>
 
       <CTable hover className="mt-3">
-        <CTableHead>
+        <CTableHead color="white">
           <CTableRow>
             <CTableHeaderCell>
               <input type="checkbox" checked={allSelected} onChange={handleSelectAll} />
@@ -139,8 +164,8 @@ function InventoryMovementList() {
                 <CTableDataCell>{m.createdByName || '-'}</CTableDataCell>
                 <CTableDataCell>{new Date(m.createdAt).toLocaleString()}</CTableDataCell>
                 <CTableDataCell>
-                  <CButton color="primary" size="sm" disabled={selectedMovements.length >= 1} onClick={() => navigate('/movement/' + m.id)}>
-                    Ver Detalles
+                  <CButton color="dark" size="sm" disabled={selectedMovements.length >= 1} onClick={() => navigate('/movement/' + m.id)}>
+                    Ver detalles
                   </CButton>
                 </CTableDataCell>
               </CTableRow>
