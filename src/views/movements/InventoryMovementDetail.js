@@ -10,7 +10,7 @@ import { cilBasket, cilDollar, cilArrowTop, cilArrowThickToLeft, cilArrowBottom,
   cilGroup, cilCalendar} from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 
-const SummaryCard = ({ title, value, icon }) => (
+const SummaryCard2 = ({ title, value, icon }) => (
   <CCol xs={12} sm={6} lg={4} className="mb-3 d-flex justify-content-center">
     <CCard className="shadow-sm border-0 w-100" style={{ borderRadius: '12px', maxWidth: '300px' }}>
       <CCardBody className="d-flex align-items-center p-2"> 
@@ -120,14 +120,14 @@ function InventoryMovementDetail() {
         <CCardBody style={{ backgroundColor: '#fafafa' }}>
           
           <CRow className="mb-2 justify-content-center">
-            <SummaryCard title="Documento de Referencia:" value={movement.referenceDocument} icon={cilFolderOpen} />
-            <SummaryCard title="Nota:" value={movement.note} icon={cilNotes} />
-            <SummaryCard title="Almacén:" value={movement.warehouseName} icon={cilLibraryBuilding} />
+            <SummaryCard2 title="Documento de Referencia:" value={movement.referenceDocument} icon={cilFolderOpen} />
+            <SummaryCard2 title="Nota:" value={movement.note} icon={cilNotes} />
+            <SummaryCard2 title="Almacén:" value={movement.warehouseName} icon={cilLibraryBuilding} />
           </CRow>
           <CRow className="mb-2 justify-content-center">
-            <SummaryCard title="Propietario" value={movement.ownerName} icon={cilGroup} />
-            <SummaryCard title="Creado por:" value={movement.createdByName}  icon={cilUser} />
-            <SummaryCard title="Fecha de Creación:" value={movement.createdAt} icon={cilCalendar} />
+            <SummaryCard2 title="Propietario" value={movement.ownerName} icon={cilGroup} />
+            <SummaryCard2 title="Creado por:" value={movement.createdByName}  icon={cilUser} />
+            <SummaryCard2 title="Fecha de Creación:" value={movement.createdAt} icon={cilCalendar} />
           </CRow>
 
           <h5 className="mt-4 mb-2 text-dark fw-bold">Detalles del Movimiento</h5>
