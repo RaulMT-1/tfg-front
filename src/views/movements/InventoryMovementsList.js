@@ -103,7 +103,7 @@ function InventoryMovementList() {
       <div style={{ marginBottom: '1rem', display: 'flex', gap: '10px' }}>
           <CTooltip content="Crear Movimiento" placement="top">
             <CButton 
-              onClick={() => navigate('/movements/create')}
+              onClick={() => navigate('/movement/create')}
               className="p-0 border-0 shadow-none"
               style={{ 
                 background: 'none', 
