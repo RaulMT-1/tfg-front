@@ -223,13 +223,13 @@ function InventoryMovementCreate() {
           </CRow>
         ))}
 
-        <CButton type="button" color="info" onClick={addDetail}>+ Agregar Producto</CButton>
+        <CButton type="button" color="dark" variant="outline" onClick={addDetail}>+ Agregar Producto</CButton>
 
         <div style={{ display: 'flex', gap: '10px', marginTop: '2rem' }}>
-          <CButton type="submit" color="success" disabled={loading}>
+          <CButton type="submit" color="warning" variant="outline" disabled={loading}>
             {loading ? 'Guardando...' : 'Guardar Movimiento'}
           </CButton>
-          <CButton color="secondary" onClick={() => navigate('/movements')}>Cancelar</CButton>
+          <CButton color="danger" variant = "outline" onClick={() => navigate('/movements')}>Cancelar</CButton>
         </div>
       </CForm>
     </div>
